@@ -2323,14 +2323,17 @@ wKeyItemsPocketCursor:: db
 wBallsPocketCursor::    db
 wTMHMPocketCursor::     db
 wBerryPocketCursor::    db
+wMedicinePocketCursor:: db
+wBattlePocketCursor::   db
 
 wPCItemsScrollPosition::        db
-	ds 1
 wItemsPocketScrollPosition::    db
 wKeyItemsPocketScrollPosition:: db
 wBallsPocketScrollPosition::    db
 wTMHMPocketScrollPosition::     db
 wBerryPocketScrollPosition::    db
+wMedicinePocketScrollPosition:: db
+wBattlePocketCursor::           db
 
 wSwitchMon::
 wSwitchItem::
@@ -2435,7 +2438,6 @@ wCurPartyLevel:: db
 
 wScrollingMenuListSize:: db
 
-	ds 1
 
 ; used when following a map warp
 wNextWarp:: db
@@ -2842,6 +2844,8 @@ NEXTU
 ; catch tutorial dude pack
 wDudeNumItems:: db
 wDudeItems:: ds 2 * 4 + 1
+wDudeNumBattle::
+wDudeNumMedicine::
 wDudeNumBerries::
 wDudeNumKeyItems:: db
 wDudeKeyItems:: ds 18 + 1
@@ -3073,6 +3077,12 @@ wBerries:: ds MAX_BERRIES * 2 + 1
 wNumPCItems:: db
 wPCItems:: ds MAX_PC_ITEMS * 2 + 1
 
+wNumMedicine:: db
+wMedicines:: ds MAX_MEDICINE * 2 + 1
+
+wNumBattle:: db
+wBattles:: ds MAX_BATTLE * 2 + 1
+
 wPokegearFlags::
 ; bit 0: map
 ; bit 1: radio
@@ -3082,21 +3092,20 @@ wPokegearFlags::
 	db
 wRadioTuningKnob:: db
 wLastDexMode:: db
-	ds 1
+
 wWhichRegisteredItem:: db
 wRegisteredItem:: db
 
 wPlayerState:: db
 
 wHallOfFameCount:: db
-	ds 1
+
 wTradeFlags:: flag_array NUM_NPC_TRADES
-	ds 1
+
 wMooMooBerries:: db
 wUndergroundSwitchPositions:: db
 wFarfetchdPosition:: db
 
-	ds 13
 
 ; map scene ids
 wPokecenter2FSceneID::                            db
@@ -3179,7 +3188,7 @@ wMountMoonSquareSceneID::                         db
 wMobileTradeRoomSceneID::                         db
 wMobileBattleRoomSceneID::                        db
 
-	ds 49
+	ds 8
 
 ; fight counts
 wJackFightCount::    db

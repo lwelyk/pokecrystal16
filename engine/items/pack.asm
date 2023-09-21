@@ -11,6 +11,10 @@
 	const PACKSTATE_TMHMPOCKETMENU     ;  8
 	const PACKSTATE_INITBERRYPOCKET
 	const PACKSTATE_BERRYPOCKETMENU
+	const PACKSTATE_INITMEDICINEPOCKET
+	const PACKSTATE_MEDICINEPOCKETMENU
+	const PACKSTATE_INITBATTLEPOCKET
+	const PACKSTATE_BATTLEPOCKETMENU
 	const PACKSTATE_QUITNOSCRIPT       ;  9
 	const PACKSTATE_QUITRUNSCRIPT      ; 10
 
@@ -53,6 +57,10 @@ Pack:
 	dw .TMHMPocketMenu     ;  8
 	dw .InitBerryPocket
 	dw .BerryPocketMenu
+	dw .InitMedicinePocket
+	dw .MedicinePocketMenu
+	dw .InitBattlePocket
+	dw .BattlePocketMenu
 	dw Pack_QuitNoScript   ;  9
 	dw Pack_QuitRunScript  ; 10
 
@@ -114,7 +122,7 @@ Pack:
 	ld [wKeyItemsPocketScrollPosition], a
 	ld a, [wMenuCursorY]
 	ld [wKeyItemsPocketCursor], a
-	ld b, PACKSTATE_INITBERRYPOCKET ; left
+	ld b, PACKSTATE_INITBATTLEPOCKET ; left
 	ld c, PACKSTATE_INITTMHMPOCKET ; right
 	call Pack_InterpretJoypad
 	ret c
@@ -265,6 +273,62 @@ Pack:
 	ld a, [wMenuCursorY]
 	ld [wBerryPocketCursor], a
 	ld b, PACKSTATE_INITBALLSPOCKET ; left
+	ld c, PACKSTATE_INITMEDICINEPOCKET ; right
+	call Pack_InterpretJoypad
+	ret c
+	call .ItemBallsKey_LoadSubmenu
+	ret
+
+.InitMedicinePocket:
+	ld a, MEDICINE_POCKET
+	ld [wCurPocket], a
+	call ClearPocketList
+	call DrawPocketName
+	call WaitBGMap_DrawPackGFX
+	call Pack_JumptableNext
+	ret
+
+.MedicinePocketMenu:
+	ld hl, MedicinePocketMenuHeader
+	call CopyMenuHeader
+	ld a, [wMedicinePocketCursor]
+	ld [wMenuCursorPosition], a
+	ld a, [wMedicinePocketScrollPosition]
+	ld [wMenuScrollPosition], a
+	call ScrollingMenu
+	ld a, [wMenuScrollPosition]
+	ld [wMedicinePocketScrollPosition], a
+	ld a, [wMenuCursorY]
+	ld [wMedicinePocketCursor], a
+	ld b, PACKSTATE_INITBERRYPOCKET ; left
+	ld c, PACKSTATE_INITBATTLEPOCKET ; right
+	call Pack_InterpretJoypad
+	ret c
+	call .ItemBallsKey_LoadSubmenu
+	ret
+
+.InitBattlePocket:
+	ld a, BATTLE_POCKET
+	ld [wCurPocket], a
+	call ClearPocketList
+	call DrawPocketName
+	call WaitBGMap_DrawPackGFX
+	call Pack_JumptableNext
+	ret
+
+.BattlePocketMenu:
+	ld hl, BattlePocketMenuHeader
+	call CopyMenuHeader
+	ld a, [wBattlePocketCursor]
+	ld [wMenuCursorPosition], a
+	ld a, [wBattlePocketScrollPosition]
+	ld [wMenuScrollPosition], a
+	call ScrollingMenu
+	ld a, [wMenuScrollPosition]
+	ld [wBattlePocketScrollPosition], a
+	ld a, [wMenuCursorY]
+	ld [wBattlePocketCursor], a
+	ld b, PACKSTATE_INITMEDICINEPOCKET ; left
 	ld c, PACKSTATE_INITKEYITEMSPOCKET ; right
 	call Pack_InterpretJoypad
 	ret c
@@ -664,6 +728,10 @@ BattlePack:
 	dw .TMHMPocketMenu     ;  8
 	dw .InitBerryPocket
 	dw .BerryPocketMenu
+	dw .InitMedicinePocket
+	dw .MedicinePocketMenu
+	dw .InitBattlePocket
+	dw .BattlePocketMenu
 	dw Pack_QuitNoScript   ;  9
 	dw Pack_QuitRunScript  ; 10
 
