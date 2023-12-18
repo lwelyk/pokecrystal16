@@ -2365,7 +2365,7 @@ LinkTrade:
 .save
 	farcall SaveAfterLinkTrade
 	farcall StubbedTrainerRankings_Trades
-	farcall BackupMobileEventIndex
+	farcall BackupGSBallFlag
 	ld c, 40
 	call DelayFrames
 	hlcoord 0, 12
@@ -2502,6 +2502,8 @@ CheckTimeCapsuleCompatibility:
 
 .move_too_new
 	push bc
+	dec hl
+	ld a, [hl]
 	ld [wNamedObjectIndex], a
 	call GetMoveName
 	call CopyName1
